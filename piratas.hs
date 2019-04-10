@@ -16,14 +16,14 @@ Como queda el pirata luego de perder todos los tesoros con un nombre dado.
 -}
 
 type Nombre = String
-type Valor = Float
+type Valor = Int
 data Tesoro = Tesosro {
   nombreDelTesoro :: Nombre,
   valorDelTesoro :: Valor
 } deriving Show 
 data Pirata = Pirata {
     nombre :: Nombre,
-    tesoro :: [Tesoro]
+    botin :: [Tesoro]
   } deriving Show
   
 brujula = Tesoro { nombreDelTesoro = "Brujula", valorDelTesoro = 10000 }
@@ -32,6 +32,8 @@ frascoDeArena = Tesoro { nombreDelTesoro = "Frasco de Arena", valorDelTesoro = 1
 cajitaMusica =  Tesoro { nombreDelTesoro= "Cajita musical", valorDelTesoro = 1}
 doblones = Tesoro { nombreDelTesoro = "Doblones", valorDelTesoro = 100 }
 
-jackSparrow = Pirata { nombre = "Jack Sparrow", tesoro = [brujula, frasco]
-davidJones = Pirata { nombre = "David Jones", tesoro = [cajitaMusuca]}
-anneBonnny = Pirata {nombre = "Anne Bonny", tesoro = [doblones, frascoDeArena]}
+jackSparrow = Pirata { nombre = "Jack Sparrow", botin = [brujula, frasco]}
+davidJones = Pirata { nombre = "David Jones", botin = [cajitaMusuca]}
+anneBonnny = Pirata {nombre = "Anne Bonny", botin = [doblones, frascoDeArena]}
+
+valorTesoro valor unTesoro = valorDelTesoro unTesoro == valor
