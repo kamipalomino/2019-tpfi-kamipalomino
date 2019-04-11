@@ -12,11 +12,25 @@ Como queda el pirata luego de perder todos los tesoros valiosos, que son los que
 Como queda el pirata luego de perder todos los tesoros con un nombre dado.
 
 
+Temporada de saqueos
+Los piratas trabajan saqueando, pero no siempre lo hacen de la misma forma. Existen manera de particular de elegir los tesoros que quieren saquear, que puede ser alguna de las siguientes:
+●     Sólo los tesoros valiosos.
+●     Tesoros con objetos específicos, es decir, sólo tesoros cuyo nombre sea una palabra clave.
+●     Existen los piratas con corazón que no saquean nada.
+●     Existe una forma más compleja que consiste en una conjunción de las anteriores. Esto significa que se quedan con los tesoros que cumplan al menos una de entre un conjunto de maneras se saquear.
+Modelar las maneras de saqueo mencionadas y hacer la función saquear, que dado un pirata, una forma de saqueo y un tesoro, devuelve al pirata con el nuevo tesoro, en caso que sea de su preferencia. 
+ 
+Probar diferentes combinaciones de piratas, tesoros y formas de saquear. Por ejemplo, con un mismo tesoro de oro valuado en 100, ver qué pasa si lo quiere saquear:
+Anne Bonny, con una manera de saquear que con consiste en buscar “oro”.
+David Jones, que no le interese saquear nada (solo le importa el amor).
+Jack Sparrow, con una forma de saquear que es una combinación de cosas valiosas y tesoros con nombre “sombrero”.
+
 
 -}
 
 type Nombre = String
 type Valor = Int
+
 data Tesoro = Tesosro {
   nombreDelTesoro :: Nombre,
   valorDelTesoro :: Valor
@@ -28,12 +42,21 @@ data Pirata = Pirata {
   
 brujula = Tesoro { nombreDelTesoro = "Brujula", valorDelTesoro = 10000 }
 frasco = Tesoro { nombreDelTesoro = "Frasco de Arena", valorDelTesoro = 0 }
-frascoDeArena = Tesoro { nombreDelTesoro = "Frasco de Arena", valorDelTesoro = 1 }
 cajitaMusica =  Tesoro { nombreDelTesoro= "Cajita musical", valorDelTesoro = 1}
 doblones = Tesoro { nombreDelTesoro = "Doblones", valorDelTesoro = 100 }
 
+
 jackSparrow = Pirata { nombre = "Jack Sparrow", botin = [brujula, frasco]}
 davidJones = Pirata { nombre = "David Jones", botin = [cajitaMusuca]}
-anneBonnny = Pirata {nombre = "Anne Bonny", botin = [doblones, frascoDeArena]}
 
-valorTesoro valor unTesoro = valorDelTesoro unTesoro == valor
+valorTesoro 1 frasco = frasco {valorDelTesoro = 1} 
+
+anneBonnny = Pirata {nombre = "Anne Bonny", botin = [doblones, frasco]}
+
+
+nuevoNombre  unNombre  unPirata = unPirata {nombre      = unNombre}
+nuevoNombreDeTesoro unNombre unTesoro = unTesoro {nombreDelTesoro = unNombre}
+valorTesoro unValor unTesoro = unTesoro {valorDelTesoro  =unValor}
+
+
+cantidadDeTesoros unPirata = (length botin) unPirata
