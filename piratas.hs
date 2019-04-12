@@ -1,4 +1,5 @@
 
+
 {-# LANGUAGE NoMonomorphismRestriction #-}
 --Cada pirata tiene un nombre y un botín (conjunto de tesoros que ya posee). De los tesoros solo les importa su nombre y valor.
  
@@ -17,9 +18,10 @@
 
 type Nombre = String
 type Valor = Int
---type Tesoro = Int
 
-data Tesoro = Tesoro {
+
+data Tesoro = Tesosro {
+
   nombreDelTesoro :: Nombre,
   valorDelTesoro :: Valor
 } deriving Show 
@@ -39,7 +41,9 @@ nombreDelTesoroNuevo unTesoro unNombre= unTesoro {nombreDelTesoro = unNombre}
 
 
 frasco = Tesoro { nombreDelTesoro = "Frasco de Arena", valorDelTesoro = 0 }
+
 cajitaMusical =  Tesoro { nombreDelTesoro= "Cajita musical", valorDelTesoro = 1}
+
 doblones = Tesoro { nombreDelTesoro = "Doblones", valorDelTesoro = 100 }
 brujula = Tesoro { nombreDelTesoro = "Brújula", valorDelTesoro = 10000}
 
@@ -67,3 +71,4 @@ cantidadTotaldeTesoros unPirata = length (botinDelTesoro unPirata)
 --Como queda el pirata luego de adquirir un nuevo tesoro
 --Como queda el pirata luego de perder todos los tesoros valiosos, que son los que tienen un valor mayor a 100.
 --Como queda el pirata luego de perder todos los tesoros con un nombre dado.
+
