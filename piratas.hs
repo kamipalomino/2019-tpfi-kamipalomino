@@ -1,5 +1,6 @@
 
 {-# LANGUAGE NoMonomorphismRestriction #-}
+import Data.List
 --Cada pirata tiene un nombre y un botín (conjunto de tesoros que ya posee). De los tesoros solo les importa su nombre y valor.
  
 --Temporada de saqueos
@@ -62,21 +63,20 @@ esAfortunado unPirata = 10000 < cantidadTotaldeTesoros unPirata
 
 --nuevoTesoro unPirata unNombre unValor = unPirata {botin = [Tesoro{ nombreDelTesoro = unNombre, valorDelTesoro = unValor} ]}
 --aplanaLista unPirata = foldl [] . (nombresDelbotin unPirata) 
---tienenTesoroenComún unPirata  = foldl []  (nombresDelbotin unPirata)
+tienenTesoroenComún unPirata otroPirata = intersect (nombresDelbotin unPirata) (nombresDelbotin otroPirata)
 
 
 masValioso unPirata =  maximum  (botinDelTesoro unPirata)
 
 concatenar (lista : otrasListas) = lista ++ concatenar otrasListas
 
-	
+
 --filter _ [] = []
 --filter condición (x:xs) | condición x = x : filter condición xs
 --                        | otherwise = filter condición xs
 
---Si un pirata es afortunado, lo cual es cierto si el valor total de su botín supera los 10000.
 --Si dos piratas tienen un mismo tesoro, pero de valor diferente
---El valor del tesoro más valioso de un pirata.
+
 --Como queda el pirata luego de adquirir un nuevo tesoro
 --Como queda el pirata luego de perder todos los tesoros valiosos, que son los que tienen un valor mayor a 100.
 --Como queda el pirata luego de perder todos los tesoros con un nombre dado.
