@@ -1,5 +1,4 @@
 
-
 {-# LANGUAGE NoMonomorphismRestriction #-}
 --Cada pirata tiene un nombre y un botín (conjunto de tesoros que ya posee). De los tesoros solo les importa su nombre y valor.
  
@@ -18,10 +17,9 @@
 
 type Nombre = String
 type Valor = Int
+--type Tesoro = Int
 
-
-data Tesoro = Tesosro {
-
+data Tesoro = Tesoro {
   nombreDelTesoro :: Nombre,
   valorDelTesoro :: Valor
 } deriving Show 
@@ -40,12 +38,10 @@ nombreDelTesoroNuevo :: Tesoro -> String -> Tesoro
 nombreDelTesoroNuevo unTesoro unNombre= unTesoro {nombreDelTesoro = unNombre}
 
 
-frasco = Tesoro { nombreDelTesoro = "Frasco de Arena", valorDelTesoro = 0 }
-
-cajitaMusical =  Tesoro { nombreDelTesoro= "Cajita musical", valorDelTesoro = 1}
-
-doblones = Tesoro { nombreDelTesoro = "Doblones", valorDelTesoro = 100 }
-brujula = Tesoro { nombreDelTesoro = "Brújula", valorDelTesoro = 10000}
+frasco = Tesoro { nombreDelTesoro = " Frasco de Arena ", valorDelTesoro = 0 }
+cajitaMusical =  Tesoro { nombreDelTesoro= " Cajita musical ", valorDelTesoro = 1}
+doblones = Tesoro { nombreDelTesoro = " Doblones ", valorDelTesoro = 100 }
+brujula = Tesoro { nombreDelTesoro = " Brújula ", valorDelTesoro = 10000}
 
 jackSparrow = Pirata { nombre = "Jack Sparrow", botin = [brujula, valorTesoro frasco 0]}
 davidJones = Pirata { nombre = "David Jones", botin = [cajitaMusical]}
@@ -55,20 +51,32 @@ anneBonnny = Pirata {nombre = "Anne Bonny", botin = [doblones, valorTesoro frasc
 nuevoNombre  unNombre  unPirata = unPirata {nombre      = unNombre}
 --nuevoNombreDeTesoro unNombre unTesoro = unTesoro {nombreDelTesoro = unNombre}
 
---cantidadTotaldeTesoros :: Pirata -> [Valor] -> Int
 
-
-
---botinDelTesoro :: Pirata -> [Valor]
+nombresDelbotin unPirata = map nombreDelTesoro (botin unPirata)
 botinDelTesoro unPirata = map valorDelTesoro (botin unPirata)
 
-cantidadTotaldeTesoros unPirata = length (botinDelTesoro unPirata) 
+cantidadDeTesoros unPirata = length (botinDelTesoro unPirata) 
+cantidadTotaldeTesoros unPirata = sum (botinDelTesoro unPirata)
+esAfortunado unPirata = 10000 < cantidadTotaldeTesoros unPirata
 
---esAfortunado unPirata = map . botinDelTesoro unPirata
+
+--nuevoTesoro unPirata unNombre unValor = unPirata {botin = [Tesoro{ nombreDelTesoro = unNombre, valorDelTesoro = unValor} ]}
+--aplanaLista unPirata = foldl [] . (nombresDelbotin unPirata) 
+--tienenTesoroenComún unPirata  = foldl []  (nombresDelbotin unPirata)
+
+
+masValioso unPirata =  maximum  (botinDelTesoro unPirata)
+
+concatenar (lista : otrasListas) = lista ++ concatenar otrasListas
+
+	
+--filter _ [] = []
+--filter condición (x:xs) | condición x = x : filter condición xs
+--                        | otherwise = filter condición xs
+
 --Si un pirata es afortunado, lo cual es cierto si el valor total de su botín supera los 10000.
 --Si dos piratas tienen un mismo tesoro, pero de valor diferente
 --El valor del tesoro más valioso de un pirata.
 --Como queda el pirata luego de adquirir un nuevo tesoro
 --Como queda el pirata luego de perder todos los tesoros valiosos, que son los que tienen un valor mayor a 100.
 --Como queda el pirata luego de perder todos los tesoros con un nombre dado.
-
