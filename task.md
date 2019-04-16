@@ -6,7 +6,7 @@
   - [x] El valor del tesoro más valioso de un pirata.
   - [x] Como queda el pirata luego de adquirir un nuevo tesoro
   - [x] Como queda el pirata luego de perder todos los tesoros valiosos, que son los que tienen un valor mayor a 100.
-  - [ ] Como queda el pirata luego de perder todos los tesoros con un nombre dado.
+  - [x] Como queda el pirata luego de perder todos los tesoros con un nombre dado.
 
 > Definir por ejemplo a los siguientes piratas
 
@@ -25,24 +25,24 @@
 
 Probar diferentes combinaciones de piratas, tesoros y formas de saquear. Por ejemplo, con un mismo tesoro de oro valuado en 100, ver qué pasa si lo quiere saquear:
 
-	- [ ] Anne Bonny, con una manera de saquear que con consiste en buscar “oro”.
-	- [ ] David Jones, que no le interese saquear nada (solo le importa el amor).
-	- [ ] Jack Sparrow, con una forma de saquear que es una combinación de cosas valiosas y tesoros con nombre “sombrero”.
+- [x] Anne Bonny, con una manera de saquear que con consiste en buscar “oro”.
+- [x] David Jones, que no le interese saquear nada (solo le importa el amor).
+- [ ] Jack Sparrow, con una forma de saquear que es una combinación de cosas valiosas y tesoros con nombre “sombrero”.
 
 Navegando los siete mares ocean
 
 Los piratas se juntan para armar una tripulación que viaja en barco recorriendo los mares en busca de nuevos tesoros. Cada barco se caracteriza por una manera de saquear, que utilizan todos sus tripulantes.
 
    Hacer funciones para representar que: 
-   - [ ] Un pirata se incorpora a la tripulación de un barco 
-   - [ ] Un pirata abandona la tripulación de un barco
+   - [x] Un pirata se incorpora a la tripulación de un barco 
+   - [x] Un pirata abandona la tripulación de un barco
 
 > Por ejemplo:
 
-	- [ ] La tripulación del Perla Negra está compuesta por Jack Sparrow y Anne Bonny
-	- [ ] La tripulación del Holandés Errante está compuesta por David Jones.
-	- [ ] Elizabeth Swann, que posee una moneda del cofre muerto valuada en 100 y una espada de hierro que vale 50, se suma a la tripulación del Perla Negra.  
-	- [ ] Will Turner, con un cuchillo que le regaló el padre valuado en 5, también se sube al Perla Negra, pero luego abandona el barco.
+- [x] La tripulación del Perla Negra está compuesta por Jack Sparrow y Anne Bonny
+- [x] La tripulación del Holandés Errante está compuesta por David Jones.
+- [x] Elizabeth Swann, que posee una moneda del cofre muerto valuada en 100 y una espada de hierro que vale 50, se suma a la tripulación del Perla Negra.	
+- [x] Will Turner, con un cuchillo que le regaló el padre valuado en 5, también se sube al Perla Negra, pero luego abandona el barco.
 
 Mientras va navegando, a un barco le pueden pasar diferentes cosas y hay que averiguar cómo queda luego de cada una de ellas :anchor:
 
@@ -64,7 +64,7 @@ Mientras va navegando, a un barco le pueden pasar diferentes cosas y hay que ave
 
  > Por ejemplo, algunos casos de prueba pueden ser:
 
-	- [ ] La tripulación del Perla Negra desembarca en la IslaDelRon y todos se llevan una botella.
-	- [ ] El Perla Negra ataca Port Royal, donde hay muchos tesoros.
-	- [ ] El Holandes Errante pasa por la Isla Tortuga y luego hace un largo viaje para atacar Carmen de Patagones, donde hay pocos tesoros.
-	- [ ] El Perla Negra aborda al Holandes Errante
+- [ ] La tripulación del Perla Negra desembarca en la IslaDelRon y todos se llevan una botella.
+- [ ] El Perla Negra ataca Port Royal, donde hay muchos tesoros.
+- [ ] El Holandes Errante pasa por la Isla Tortuga y luego hace un largo viaje para atacar Carmen de Patagones, donde hay pocos tesoros.
+- [ ] El Perla Negra aborda al Holandes Errante
