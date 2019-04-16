@@ -11,6 +11,9 @@ import Data.List
 type Nombre = String
 type Valor = Int
 type Tesoro = (String, Int)
+type Saqueo = Tesoro -> Pirata -> Pirata
+
+
 
 data Pirata = Pirata {
     nombre :: Nombre,
@@ -23,10 +26,11 @@ valorDelTesoro = snd
 nuevoValorDelTesoro (_,valorDelTesoro) unValor= unValor
 
 nombreDelTesoro = fst 
-cualEselNombreDelTesoro unValor = forall (valorDelTesoro, unValor) 
+
+--configcualEselNombreDelTesoro unValor = find (valorDelTesoro, unValor) 
 nombreDelTesoroNuevo (nombreDelTesoro,_) unNombre = unNombre
 
-
+oro = ("Oro", 100)
 frasco = ("Frasco de Arena", 0)
 cajitaMusical =  ("Cajita musical", 1)
 doblones = ("Doblones", 100)
@@ -52,29 +56,22 @@ tesoroNuevo:: String -> Int -> Tesoro
 tesoroNuevo unNombre unValor = (unNombre, unValor) 
 
 
-
 --Como queda el pirata luego de adquirir un nuevo tesoro
-adquirirUnTesoroNuevo unPirata unNombre unValor =  nuevoBotin (insert (tesoroNuevo unNombre unValor) (botin unPirata)) unPirata
-
+--adquirirUnTesoroNuevo unPirata unNombre unValor =  nuevoBotin (insert (tesoroNuevo unNombre unValor) (botin unPirata)) unPirata
+adquirirUnTesoroNuevo unPirata unTesoro =  nuevoBotin (insert unTesoro (botin unPirata)) unPirata
 
 --Si dos piratas tienen un mismo tesoro, pero de valor diferente
+botinEnComun unPirata otroPirata = intersect (botin unPirata) (botin otroPirata) 
 tienenTesoroenComún unPirata otroPirata = intersect (nombresDelbotin unPirata) (nombresDelbotin otroPirata)  
-tesoroenComúnDistintoValor unPirata otroPirata =   (tienenTesoroenComún unPirata otroPirata) 
+tesoroenComúnDistintoValor unPirata otroPirata =  length (tienenTesoroenComún unPirata otroPirata) /= 0 && length (botinEnComun unPirata otroPirata) == 0
 
 --										|otherwise
 
 
-masValioso unPirata =  maximum  (botinDelTesoro unPirata)
+masValioso unPirata = maximum (botinDelTesoro unPirata)
 
 concatenar (lista : otrasListas) = lista ++ concatenar otrasListas
 
-
---tesoroenComúnDistintoValor unPirata otroPirata = (botinDelTesoro unPirata /= botinDelTesoro otroPirata) . (tienenTesoroenComún unPirata otroPirata)
-
---tesoroenComúnDistintoValor unPirata otroPirata | tienenTesoroenComún unPirata otroPirata = (botinDelTesoro unPirata /= botinDelTesoro otroPirata)
---												|otherwise = False
-
---tesorosValiososo unPirata= filter esValioso (botin unPirata)
 
 --Como queda esVl pirata luego de perder todos los tesoros valiosos, que son los que tienen un valor mayor a 100.
 sacarTesorosValiosos unPirata= unPirata  {botin = filter (not. esValioso) (botin unPirata)}
@@ -89,19 +86,24 @@ sacarTesorosValiosos unPirata= unPirata  {botin = filter (not. esValioso) (botin
 --unTesoro :: Tesoro
 esValioso unTesoro  = 100 < (valorDelTesoro unTesoro) 
 
-tesoroEspecifico unNombre unPirata = find unNombre  (botin unPirata)
-
-
---sacarTesoroValioso unPirata =  forall (delete,  (tesorosValiosos unPirata) )
+tesoroEspecifico unNombre unPirata = elem unNombre  (botin unPirata)
+sacarTesoroEspecifico unNombre unPirata = unPirata {botin = filter (not. esValioso) (botin unPirata) }
 
 -- ●     Sólo los tesoros valiosos.
-saqueoValioso unNombre unValor unPirata | esValioso (tesoroNuevo unNombre unValor) =  adquirirUnTesoroNuevo unPirata unNombre unValor
-										| otherwise = unPirata
+saqueoValioso :: Saqueo
+saqueoValioso unTesoro unPirata | esValioso unTesoro =  adquirirUnTesoroNuevo unPirata unTesoro
+								| otherwise = unPirata
+claveDelTesoro unaClave unTesoro =  nombreDelTesoro unTesoro == unaClave
 
-pirataConCorazon unTesoro unPirata = botin unPirata
+saqueoEspecifico :: String -> Saqueo
+saqueoEspecifico unaClave unTesoro unPirata | claveDelTesoro unaClave unTesoro = adquirirUnTesoroNuevo unPirata unTesoro
+											| otherwise = unPirata
 
+pirataConCorazon unTesoro unPirata = unPirata
 
---saquear unPirata unSaqueo unTesoro 	| unSaqueo == saqueoValioso = saqueoValioso unTesoro unPirata
+--unSaqueo  Saqueo 
+--saquear unPirata unSaqueo unTesoro 	| saqueoValioso = saqueoValioso unTesoro unPirata
+--									| pirataConCorazon = pirataConCorazon unTesoro unPirata
 --									| otherwise = pirataConCorazon unTesoro unPirata
 
 --saquear, que dado un pirata, una forma de saqueo y un tesoro, devuelve al pirata con el nuevo tesoro, en caso que sea de su preferencia. 

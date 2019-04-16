@@ -2,10 +2,10 @@
 
   - [x] La cantidad de tesoros de un pirata
   - [x] Si un pirata es afortunado, lo cual es cierto si el valor total de su botín supera los 10000.
-  - [ ] Si dos piratas tienen un mismo tesoro, pero de valor diferente
+  - [x] Si dos piratas tienen un mismo tesoro, pero de valor diferente
   - [x] El valor del tesoro más valioso de un pirata.
   - [x] Como queda el pirata luego de adquirir un nuevo tesoro
-  - [ ] Como queda el pirata luego de perder todos los tesoros valiosos, que son los que tienen un valor mayor a 100.
+  - [x] Como queda el pirata luego de perder todos los tesoros valiosos, que son los que tienen un valor mayor a 100.
   - [ ] Como queda el pirata luego de perder todos los tesoros con un nombre dado.
 
 > Definir por ejemplo a los siguientes piratas
@@ -16,9 +16,9 @@
 
 ### Temporada de saqueos 
 
-- [ ] Sólo los tesoros valiosos.
-- [ ] Tesoros con objetos específicos, es decir, sólo tesoros cuyo nombre sea una palabra clave.
-- [ ] Existen los piratas con corazón que no saquean nada.
+- [x] Sólo los tesoros valiosos.
+- [x] Tesoros con objetos específicos, es decir, sólo tesoros cuyo nombre sea una palabra clave.
+- [x] Existen los piratas con corazón que no saquean nada.
 - [ ] Se quedan con los tesoros que cumplan al menos una de entre un conjunto de maneras se saquear.
 
 > - [ ] Hacer la función saquear, que dado un pirata, una forma de saqueo y un tesoro, devuelve al pirata con el nuevo tesoro, en caso que sea de su preferencia.
