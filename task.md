@@ -47,8 +47,8 @@ Los piratas se juntan para armar una tripulación que viaja en barco recorriendo
 Mientras va navegando, a un barco le pueden pasar diferentes cosas y hay que averiguar cómo queda luego de cada una de ellas :anchor:
 
 - [ ] Anclar en una isla deshabitada: cuando llega a una isla todos los miembros de la tripulación toman como tesoro un elemento típico de la isla, del que hay en abundancia para que todos los piratas puedan tener uno. 
-	- [ ] Isla Tortuga, que es muy pequeña y en la que todos los piratas se hacen de un frasco de arena de valor 1 
-	- [ ] Isla del Ron, donde alguna vez hubo un depósito de provisiones y todos los piratas de la tripulación se llevan una botella de ron valuada en 25. 
+	- [x] Isla Tortuga, que es muy pequeña y en la que todos los piratas se hacen de un frasco de arena de valor 1 
+	- [x] Isla del Ron, donde alguna vez hubo un depósito de provisiones y todos los piratas de la tripulación se llevan una botella de ron valuada en 25. 
 
 - [ ] Atacar una ciudad: Cuando el barco llega a una ciudad costera en la que hay muchos tesoros, luego de derrotar a las pobladores, los piratas saquean los tesoros existentes. 
 

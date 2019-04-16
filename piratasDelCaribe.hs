@@ -8,7 +8,7 @@ import Data.List
 --Probar diferentes combinaciones de piratas, tesoros y formas de saquear. Por ejemplo, con un mismo tesoro de oro valuado en 100, ver qué pasa si lo quiere saquear:
 --Jack Sparrow, con una forma de saquear que es una combinación de cosas valiosas y tesoros con nombre “sombrero”.
 
-
+type Isla = (String, Tesoro)
 type Nombre = String
 type Valor = Int
 type Tesoro = (String, Int)
@@ -50,6 +50,7 @@ brujula = ("Brújula", 10000)
 cofreMuerto = ("Cofre muerto", 100)
 espada = ("Espada de hierro", 50)
 cuchillo = ("Cuchillo", 5)
+ron =("Botella de Ron", 25)
 ------------------------------ PIRATAS ---------------------------------------------------
 
 jackSparrow = Pirata { nombre = "Jack Sparrow", botin = [brujula, frasco]}
@@ -62,6 +63,11 @@ tuner= Pirata { nombre ="Will Turner", botin = [cuchillo]}
 perlaNegra = Barco {tripulación = [jackSparrow,anneBonnny] , maneraDeSaquear = saqueoValioso }
 holandésErrante = Barco {tripulación = [davidJones] , maneraDeSaquear = pirataConCorazon }
 
+------------------------------ Isla ---------------------------------------------------
+tortugas = ("Isla Tortuga", frasco)
+ronIsland =("Isla del Ron", ron)
+
+tesoroDelaIsla unIsla = snd unIsla
 
 
 
@@ -106,9 +112,12 @@ saqueoEspecifico unaClave unTesoro unPirata | claveDelTesoro unaClave unTesoro =
 pirataConCorazon :: Saqueo
 pirataConCorazon unTesoro unPirata = unPirata
 
---unSaqueo  Saqueo 
---saquear unPirata unSaqueo unTesoro 	| saqueoValioso = saqueoValioso unTesoro unPirata
---									| pirataConCorazon = pirataConCorazon unTesoro unPirata
---									| otherwise = pirataConCorazon unTesoro unPirata
 
---saquear, que dado un pirata, una forma de saqueo y un tesoro, devuelve al pirata con el nuevo tesoro, en caso que sea de su preferencia. 
+saquear :: Pirata -> (Saqueo) -> Tesoro -> Pirata
+saquear unPirata unSaqueo unTesoro = (unSaqueo unTesoro) unPirata
+
+--anclarEnIsla
+anclarEnIsla unaIsla unBarco =  saquear (tripulación unBarco) (maneraDeSaquear unBarco) (tesoroDelaIsla unaIsla) 
+--anclarIslaDeshabitada::Barco->Isla->Barco
+--anclarIslaDeshabitada (Barco pir fma) (Isla obj nom) = Barco (agregarVariosTesoros pir obj) fma
+--
