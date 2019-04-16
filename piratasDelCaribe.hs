@@ -1,6 +1,10 @@
 
 {-# LANGUAGE NoMonomorphismRestriction #-}
+import Text.Show.Functions 
+import Data.Maybe
 import Data.List
+
+
 --Cada pirata tiene un nombre y un botín (conjunto de tesoros que ya posee). De los tesoros solo les importa su nombre y valor.
 
 --Probar diferentes combinaciones de piratas, tesoros y formas de saquear. Por ejemplo, con un mismo tesoro de oro valuado en 100, ver qué pasa si lo quiere saquear:
@@ -30,7 +34,7 @@ nombreDelTesoro = fst
 --configcualEselNombreDelTesoro unValor = find (valorDelTesoro, unValor) 
 nombreDelTesoroNuevo (nombreDelTesoro,_) unNombre = unNombre
 
-oro = ("Oro", 100)
+oro = ("Oro", 101)
 frasco = ("Frasco de Arena", 0)
 cajitaMusical =  ("Cajita musical", 1)
 doblones = ("Doblones", 100)
@@ -44,31 +48,25 @@ anneBonnny = Pirata {nombre = "Anne Bonny", botin = [doblones, (nombreDelTesoro 
 nuevoNombre  unNombre  unPirata = unPirata {nombre      = unNombre}
 nuevoBotin unBotin unPirata = unPirata {botin = unBotin}
 
-elBotin = botin
-nombresDelbotin unPirata = map nombreDelTesoro (botin unPirata)
-botinDelTesoro unPirata = map valorDelTesoro (botin unPirata)
+nombresDelbotin = map nombreDelTesoro.(botin)
+botinDelTesoro  = map valorDelTesoro.(botin)
 
-cantidadDeTesoros unPirata = length (botinDelTesoro unPirata) 
-cantidadTotaldeTesoros unPirata = sum (botinDelTesoro unPirata)
+cantidadDeTesoros = length. botinDelTesoro 
+cantidadTotaldeTesoros = sum . botinDelTesoro
 esAfortunado unPirata = 10000 < cantidadTotaldeTesoros unPirata
 
 tesoroNuevo:: String -> Int -> Tesoro
 tesoroNuevo unNombre unValor = (unNombre, unValor) 
 
-
---Como queda el pirata luego de adquirir un nuevo tesoro
---adquirirUnTesoroNuevo unPirata unNombre unValor =  nuevoBotin (insert (tesoroNuevo unNombre unValor) (botin unPirata)) unPirata
-adquirirUnTesoroNuevo unPirata unTesoro =  nuevoBotin (insert unTesoro (botin unPirata)) unPirata
+adquirirUnTesoroNuevo unPirata unTesoro =  nuevoBotin (unTesoro : botin unPirata) unPirata
 
 --Si dos piratas tienen un mismo tesoro, pero de valor diferente
 botinEnComun unPirata otroPirata = intersect (botin unPirata) (botin otroPirata) 
 tienenTesoroenComún unPirata otroPirata = intersect (nombresDelbotin unPirata) (nombresDelbotin otroPirata)  
 tesoroenComúnDistintoValor unPirata otroPirata =  length (tienenTesoroenComún unPirata otroPirata) /= 0 && length (botinEnComun unPirata otroPirata) == 0
 
---										|otherwise
-
-
-masValioso unPirata = maximum (botinDelTesoro unPirata)
+--									
+masValioso = maximum.botinDelTesoro
 
 concatenar (lista : otrasListas) = lista ++ concatenar otrasListas
 
@@ -86,8 +84,7 @@ sacarTesorosValiosos unPirata= unPirata  {botin = filter (not. esValioso) (botin
 --unTesoro :: Tesoro
 esValioso unTesoro  = 100 < (valorDelTesoro unTesoro) 
 
-tesoroEspecifico unNombre unPirata = elem unNombre  (botin unPirata)
-sacarTesoroEspecifico unNombre unPirata = unPirata {botin = filter (not. esValioso) (botin unPirata) }
+sacarTesoroEspecifico unNombre unPirata = filter ((/=)unNombre) (nombresDelbotin unPirata)
 
 -- ●     Sólo los tesoros valiosos.
 saqueoValioso :: Saqueo
