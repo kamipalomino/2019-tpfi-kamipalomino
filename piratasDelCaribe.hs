@@ -7,10 +7,16 @@ import Test.Hspec.Core.Runner
 import Test.Hspec.Core.Spec
 
 
-{--ejecutarTest = hspec $ do
+ejecutarTest = hspec $ do
  describe "Tesoros piratas" $ do
-	it "La cantidad de tesoros de un pirata, Debería ser 2."$ (cantidadDeTesoros jackSparrow) `shouldBe` 2
-	it "Si un pirata es afortunado, Debería ser True."$ esAfortunado jackSparrow `shouldBe` True
+	it "La cantidad de tesoros de un pirata, Debería ser 2."$ (cantidadDeTesoros jackSparrow) == 2
+	it "Si un pirata es afortunado, Debería ser True."$ esAfortunado jackSparrow == True
+	it "jackSparrow y anneBonnny tienen un mismo tesoro, pero de valor diferente. Debería ser Verdadero" $ tesoroenComúnDistintoValor jackSparrow anneBonnny == True
+  	it "El valor del tesoro más valioso de davidJones. Es de 1"$ (masValioso davidJones) == 1
+  	it "davidJones luego de adquirir un cuchillo valuado en 5" $ adquirirUnTesoroNuevo cuchillo davidJones == Pirata {nombre = "David Jones", botin = [("Cuchillo",5),("Cajita musical",1)]}
+	it "Jack Sparrow luego de perder todos los tesoros valiosos, queda con tesoro de 10001" $ sacarTesorosValiosos jackSparrow == Pirata {nombre = "Jack Sparrow", botin = [("Brujula", 10001)]}
+	it "Daidjones luego de perder todos los tesoros llamados 'Cajita musical' que sin Tesoros" $ sacarTesoroEspecifico "Cajita musical" davidJones == []
+	 
 
 --------------------------------------------------}
 
@@ -64,7 +70,7 @@ oro = ("Oro", 101)
 frasco = ("Frasco de Arena", 0)
 cajitaMusical =  ("Cajita musical", 1)
 doblones = ("Doblones", 100)
-brujula = ("Brújula", 10001)
+brujula = ("Brujula", 10001)
 cofreMuerto = ("Cofre muerto", 100)
 espada = ("Espada de hierro", 50)
 cuchillo = ("Cuchillo", 5)
@@ -72,7 +78,7 @@ ron =("Botella de Ron", 25)
 ------------------------------ PIRATAS ---------------------------------------------------
 
 jackSparrow = Pirata { nombre = "Jack Sparrow", botin = [brujula, frasco]}
-davidJones = Pirata { nombre = "David Jones", botin = [cajitaMusical, doblones]}
+davidJones = Pirata { nombre = "David Jones", botin = [cajitaMusical]}
 anneBonnny = Pirata {nombre = "Anne Bonny", botin = [doblones, (nombreDelTesoro frasco, nuevoValorDelTesoro frasco 1)]}
 elizabethSwann = Pirata { nombre ="", botin = [cofreMuerto, espada]}
 tuner= Pirata { nombre ="Will Turner", botin = [cuchillo]}
@@ -129,7 +135,7 @@ concatenar (lista : otrasListas) = lista ++ concatenar otrasListas
 
 sacarTesorosValiosos unPirata= unPirata  {botin = filter (not. esValioso) (botin unPirata)}
 
-esValioso unTesoro  = 100 < (valorDelTesoro unTesoro) 
+esValioso unTesoro  = 100 > (valorDelTesoro unTesoro) 
 
 sacarTesoroEspecifico unNombre unPirata = filter ((/=)unNombre) (nombresDelbotin unPirata)
 
