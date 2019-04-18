@@ -3,19 +3,26 @@
 import Text.Show.Functions 
 import Data.Maybe
 import Data.List
+import Test.Hspec.Core.Runner
+import Test.Hspec.Core.Spec
 
 
---Probar diferentes combinaciones de piratas, tesoros y formas de saquear. Por ejemplo, con un mismo tesoro de oro valuado en 100, ver qué pasa si lo quiere saquear:
---Jack Sparrow, con una forma de saquear que es una combinación de cosas valiosas y tesoros con nombre “sombrero”.
+{--ejecutarTest = hspec $ do
+ describe "Tesoros piratas" $ do
+	it "La cantidad de tesoros de un pirata, Debería ser 2."$ (cantidadDeTesoros jackSparrow) `shouldBe` 2
+	it "Si un pirata es afortunado, Debería ser True."$ esAfortunado jackSparrow `shouldBe` True
 
-type Isla = (String, Tesoro)
+--------------------------------------------------}
+
+
+type Isla = (Tesoro, String, Int)
 type Nombre = String
 type Valor = Int
 type Tesoro = (String, Int)
 type Saqueo = Tesoro -> Pirata -> Pirata
 
 data Barco = Barco {
-	tripulación :: [Pirata],
+	tripulacion :: [Pirata],
 	maneraDeSaquear :: Saqueo
 } deriving (Show)
 
@@ -25,28 +32,39 @@ data Pirata = Pirata {
   } deriving (Show, Eq)
 
 
-tesoroNuevo:: String -> Int -> Tesoro
+tesoroNuevo :: String -> Int -> Tesoro
 tesoroNuevo unNombre unValor = (unNombre, unValor) 
 
+nombreDelTesoro :: Tesoro -> String
 nombreDelTesoro = fst 
+
+valorDelTesoro:: Tesoro -> Int
 valorDelTesoro = snd
 
+nuevoValorDelTesoro :: Tesoro -> Int -> Int
 nuevoValorDelTesoro  (_,valorDelTesoro) unValor= unValor
 
+nuevoPirata :: String -> Pirata -> Pirata
 nuevoPirata  unNombre  unPirata = unPirata {nombre      = unNombre}
+
+nuevoBotin :: [Tesoro] -> Pirata -> Pirata
 nuevoBotin unBotin unPirata = unPirata {botin = unBotin}
 
+nombresDelbotin :: Pirata -> [String]
 nombresDelbotin = map nombreDelTesoro.(botin)
+
+botinDelTesoro :: Pirata -> [Int]
 botinDelTesoro  = map valorDelTesoro.(botin)
 
-
+laTripulacion :: Barco ->Int
+laTripulacion = length .(tripulacion)  
 
 ------------------------------ TESOROS ---------------------------------------------------
 oro = ("Oro", 101)
 frasco = ("Frasco de Arena", 0)
 cajitaMusical =  ("Cajita musical", 1)
 doblones = ("Doblones", 100)
-brujula = ("Brújula", 10000)
+brujula = ("Brújula", 10001)
 cofreMuerto = ("Cofre muerto", 100)
 espada = ("Espada de hierro", 50)
 cuchillo = ("Cuchillo", 5)
@@ -60,27 +78,43 @@ elizabethSwann = Pirata { nombre ="", botin = [cofreMuerto, espada]}
 tuner= Pirata { nombre ="Will Turner", botin = [cuchillo]}
 
 ------------------------------ BARCOS ---------------------------------------------------
-perlaNegra = Barco {tripulación = [jackSparrow,anneBonnny] , maneraDeSaquear = saqueoValioso }
-holandésErrante = Barco {tripulación = [davidJones] , maneraDeSaquear = pirataConCorazon }
+perlaNegra = Barco {tripulacion = [jackSparrow,anneBonnny] , maneraDeSaquear = saqueoValioso }
+holandésErrante = Barco {tripulacion = [davidJones] , maneraDeSaquear = pirataConCorazon }
 
 ------------------------------ Isla ---------------------------------------------------
-tortugas = ("Isla Tortuga", frasco)
-ronIsland =("Isla del Ron", ron)
+tortugas = (tesoroNuevo (nombreDelTesoro frasco) 1, "Isla Tortuga",5)
+ronIsland =(ron, "Isla del Ron", 5)
 
-tesoroDelaIsla unIsla = snd unIsla
+--tortugas = frasco
+--ronIsland = ron
+nombreDeLaIsla :: Isla -> String
+nombreDeLaIsla (_,nombreIsla,_)= nombreIsla 
 
+tesoroDelaIsla :: Isla -> Tesoro
+tesoroDelaIsla (tesoroIsla,_,_)= tesoroIsla 
 
+cantidadDeTesorosIsla :: Isla -> Int
+cantidadDeTesorosIsla (_,_,cantidad)= cantidad
 
+elSaqueo :: Barco -> Saqueo
+elSaqueo unBarco = maneraDeSaquear unBarco 
+
+cantidadDeTesoros :: Pirata -> Int
 cantidadDeTesoros = length. botinDelTesoro 
+
+
+cantidadTotaldeTesoros :: Pirata -> Int
 cantidadTotaldeTesoros = sum . botinDelTesoro
-esAfortunado unPirata = 10000 < cantidadTotaldeTesoros unPirata
 
-nuevaTripulacion unaTripulacion unBarco= unBarco {tripulación = unaTripulacion} 
-subeTripulante unPirata unBarco= nuevaTripulacion (unPirata: tripulación unBarco) unBarco 
-bajaTripulante unPirata unBarco= filter ((/=)unPirata) (tripulación unBarco)
+esAfortunado :: Pirata -> Bool
+esAfortunado = (>10000) .cantidadTotaldeTesoros 
+
+nuevaTripulacion unaTripulacion unBarco= unBarco {tripulacion = unaTripulacion} 
+subeTripulante unPirata unBarco= nuevaTripulacion (unPirata: tripulacion unBarco) unBarco 
+bajaTripulante unPirata unBarco= filter ((/=)unPirata) (tripulacion unBarco)
 
 
-adquirirUnTesoroNuevo unPirata unTesoro =  nuevoBotin (unTesoro : botin unPirata) unPirata
+adquirirUnTesoroNuevo unTesoro unPirata = nuevoBotin (unTesoro : botin unPirata) unPirata
 
 --Si dos piratas tienen un mismo tesoro, pero de valor diferente
 botinEnComun unPirata otroPirata = intersect (botin unPirata) (botin otroPirata) 
@@ -93,7 +127,6 @@ masValioso = maximum.botinDelTesoro
 concatenar (lista : otrasListas) = lista ++ concatenar otrasListas
 
 
---Como queda esVl pirata luego de perder todos los tesoros valiosos, que son los que tienen un valor mayor a 100.
 sacarTesorosValiosos unPirata= unPirata  {botin = filter (not. esValioso) (botin unPirata)}
 
 esValioso unTesoro  = 100 < (valorDelTesoro unTesoro) 
@@ -102,13 +135,17 @@ sacarTesoroEspecifico unNombre unPirata = filter ((/=)unNombre) (nombresDelbotin
 
 
 saqueoValioso :: Saqueo
-saqueoValioso unTesoro unPirata | esValioso unTesoro =  adquirirUnTesoroNuevo unPirata unTesoro
+saqueoValioso unTesoro unPirata | esValioso unTesoro =  adquirirUnTesoroNuevo unTesoro unPirata
 								| otherwise = unPirata
+
+
 claveDelTesoro unaClave unTesoro =  nombreDelTesoro unTesoro == unaClave
 
+
 saqueoEspecifico :: String -> Saqueo
-saqueoEspecifico unaClave unTesoro unPirata | claveDelTesoro unaClave unTesoro = adquirirUnTesoroNuevo unPirata unTesoro
+saqueoEspecifico unaClave unTesoro unPirata | claveDelTesoro unaClave unTesoro = adquirirUnTesoroNuevo unTesoro unPirata
 											| otherwise = unPirata
+
 pirataConCorazon :: Saqueo
 pirataConCorazon unTesoro unPirata = unPirata
 
@@ -116,8 +153,19 @@ pirataConCorazon unTesoro unPirata = unPirata
 saquear :: Pirata -> (Saqueo) -> Tesoro -> Pirata
 saquear unPirata unSaqueo unTesoro = (unSaqueo unTesoro) unPirata
 
---anclarEnIsla
-anclarEnIsla unaIsla unBarco =  saquear (tripulación unBarco) (maneraDeSaquear unBarco) (tesoroDelaIsla unaIsla) 
+
+alcanzanLosTesoros :: Isla -> Int -> Bool
+alcanzanLosTesoros = (>=) .cantidadDeTesorosIsla 
+
+
+anclarEnIslaDeshabitada :: Isla -> Barco -> Bool
+anclarEnIslaDeshabitada unaIsla = alcanzanLosTesoros unaIsla . (laTripulacion) 
+
+
+anclarEnIsla :: Barco -> Isla -> [Pirata]
+anclarEnIsla unBarco unaIsla = map (adquirirUnTesoroNuevo (tesoroDelaIsla unaIsla)) (tripulacion unBarco)
+
+--maneraDeSaquear unBarco)  (tesoroDelaIsla unaIsla))
 --anclarIslaDeshabitada::Barco->Isla->Barco
 --anclarIslaDeshabitada (Barco pir fma) (Isla obj nom) = Barco (agregarVariosTesoros pir obj) fma
 --

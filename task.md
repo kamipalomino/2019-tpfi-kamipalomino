@@ -21,7 +21,7 @@
 - [x] Existen los piratas con corazón que no saquean nada.
 - [ ] Se quedan con los tesoros que cumplan al menos una de entre un conjunto de maneras se saquear.
 
-> - [ ] Hacer la función saquear, que dado un pirata, una forma de saqueo y un tesoro, devuelve al pirata con el nuevo tesoro, en caso que sea de su preferencia.
+> - [x] Hacer la función saquear, que dado un pirata, una forma de saqueo y un tesoro, devuelve al pirata con el nuevo tesoro, en caso que sea de su preferencia.
 
 Probar diferentes combinaciones de piratas, tesoros y formas de saquear. Por ejemplo, con un mismo tesoro de oro valuado en 100, ver qué pasa si lo quiere saquear:
 
@@ -46,7 +46,7 @@ Los piratas se juntan para armar una tripulación que viaja en barco recorriendo
 
 Mientras va navegando, a un barco le pueden pasar diferentes cosas y hay que averiguar cómo queda luego de cada una de ellas :anchor:
 
-- [ ] Anclar en una isla deshabitada: cuando llega a una isla todos los miembros de la tripulación toman como tesoro un elemento típico de la isla, del que hay en abundancia para que todos los piratas puedan tener uno. 
+- [x] Anclar en una isla deshabitada: cuando llega a una isla todos los miembros de la tripulación toman como tesoro un elemento típico de la isla, del que hay en abundancia para que todos los piratas puedan tener uno. 
 	- [x] Isla Tortuga, que es muy pequeña y en la que todos los piratas se hacen de un frasco de arena de valor 1 
 	- [x] Isla del Ron, donde alguna vez hubo un depósito de provisiones y todos los piratas de la tripulación se llevan una botella de ron valuada en 25. 
 
